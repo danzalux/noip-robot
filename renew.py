@@ -65,6 +65,7 @@ if __name__ == "__main__":
     browserOptions.add_argument("--no-sandbox")
     browserOptions.add_argument("disable-gpu")
     browserOptions.add_argument("user-agent=" + str(get_user_agent()))
+    browserOptions.set_preference("intl.accept_languages", "en-US")
 
     browser = webdriver.Firefox(options=browserOptions)
 
@@ -81,7 +82,7 @@ if __name__ == "__main__":
         #print("send_keys RETURN")
 
         login_button = False
-        
+
         for button in browser.find_elements(By.TAG_NAME, "button"):
             if button.text == "Log In" or button.text == "Anmelden":
                 print("Found button:" + button.text)
@@ -119,7 +120,7 @@ if __name__ == "__main__":
                 try:
                     hosts = method2()
                     print("\nLooking for Hosts:")
-                    
+
                     for host in hosts:
                         try:
                             button = host.find_element(By.TAG_NAME, "button")
@@ -136,13 +137,13 @@ if __name__ == "__main__":
                             if "IP / Target" == td.get_attribute("data-title"):
                                 break
                         print("-------------------")
-                        
+
 
                         try:
                             days_label = host.find_element(By.CLASS_NAME, "no-link-style")
                             print("Label: " + days_label.text)
                             print(days_label.get_attribute("data-original-title"))
-                            print("Found Host-Button: " + button.text)                            
+                            print("Found Host-Button: " + button.text)
                         except NoSuchElementException as e:
                             print("Days_label not found")
 
@@ -153,7 +154,7 @@ if __name__ == "__main__":
                             confirmed_host = host.find_element(By.TAG_NAME, "a").text
                             print("\nHost \"" + confirmed_host + "\" confirmed")
                             sleep(0.20)
-                        
+
                         #elif button.text == "Modify":
                             #button.click()
                             #print("Click " + button.text)
@@ -185,5 +186,7 @@ if __name__ == "__main__":
             print("Logging off\n")
             browser.get(LOGOUT_URL)
     else:
-        print("Cannot access login page:\t" + LOGIN_URL)
+        print("Cannot access login page:\t"   + LOGIN_URL)
+        print("\nProvided browser page is:\t" + browser.current_url)
+
     browser.quit()
