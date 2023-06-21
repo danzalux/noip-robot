@@ -43,4 +43,7 @@ __
 
 ### Note:
 The script is not designed to renew/update the dynamic DNS records, but only to renew the hostnames expiring every 30 days due to the free tier. Check noip.com documentation for that purpose. Most wireless routers support noip.com .
+
+This is an up-to-date fork of loblab/noip-renew repository as it seems it's not anymore actively developed. Feel free to contribute!
+
 ___
