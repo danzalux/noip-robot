@@ -20,7 +20,7 @@ free hosts expire every month. This simplified script auto clicks web pages to r
 
 `0 9 */3 * * docker run --rm noip-robot NOIPusername password`
 
-At 09:00 on every 3rd day-of-month.
+Run at 09:00 on every 3rd day-of-month. (for every Day 9:00 just leave * - `0 9 * * * ...`)
 
 Or run with output to file:
 
@@ -44,6 +44,6 @@ __
 ### Note:
 The script is not designed to renew/update the dynamic DNS records, but only to renew the hostnames expiring every 30 days due to the free tier. Check noip.com documentation for that purpose. Most wireless routers support noip.com .
 
-This is an up-to-date mixed fork based on loblab/noip-renew repository as it seems it's not anymore actively developed. Feel free to contribute!
+This is an up-to-date mixed fork based on `loblab/noip-renew` and `simao-silva/noip-renewer` repository as it seems it's not anymore actively developed. Feel free to contribute!
 
 ___
