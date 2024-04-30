@@ -17,6 +17,7 @@ free hosts expire every month. This simplified script auto clicks web pages to r
 `docker run --rm -it noip-robot NOIPusername password`
 
 With <code>--rm</code> the container will automatically remove when it exit.
+`-it` is short for `--interactive` + `--tty`. When you docker run with this command it takes you straight inside the container.
 
 ## Linux-Cron (simple variant usage:"crontab -e"):
 
