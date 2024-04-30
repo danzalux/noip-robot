@@ -28,6 +28,8 @@ Or run with output to file:
 
 `crontab -l` (view the contents of your crontab)
 
+With <code>--rm</code>, the container will automatically remove when it exit.
+
 [https://crontab.guru/#0_9_*/3_*_*](https://crontab.guru/#0_9_*/3_*_*)
 
 [https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804](https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804)
