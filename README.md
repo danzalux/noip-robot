@@ -16,13 +16,13 @@ free hosts expire every month. This simplified script auto clicks web pages to r
 
 `docker run --rm -it noip-robot NOIPusername password`
 
+With <code>--rm</code> the container will automatically remove when it exit.
+
 ## Linux-Cron (simple variant usage:"crontab -e"):
 
 `0 9 */3 * * docker run --rm noip-robot NOIPusername password`
 
 Run at 09:00 on every 3rd day-of-month. (for every Day 9:00 just leave * - `0 9 * * * ...`)
-
-With <code>--rm</code> the container will automatically remove when it exit.
 
 Or run with output to file:
 
