@@ -22,13 +22,13 @@ free hosts expire every month. This simplified script auto clicks web pages to r
 
 Run at 09:00 on every 3rd day-of-month. (for every Day 9:00 just leave * - `0 9 * * * ...`)
 
+With <code>--rm</code> the container will automatically remove when it exit.
+
 Or run with output to file:
 
 `0 9 */3 * * docker run --rm noip-robot NOIPusername password >> /directory/path/file.log`
 
 `crontab -l` (view the contents of your crontab)
-
-With <code>--rm</code>, the container will automatically remove when it exit.
 
 [https://crontab.guru/#0_9_*/3_*_*](https://crontab.guru/#0_9_*/3_*_*)
 
