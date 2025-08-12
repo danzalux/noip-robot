@@ -6,9 +6,15 @@ free hosts expire every month. This simplified script auto clicks web pages to r
 
 ## noip-robot
 
-### >> Clone this repo <<
+### =>> Clone this repo <<=
+
+Go to your project-folder (or create) and type:
 
 `git clone https://github.com/danzalux/noip-robot.git`
+
+*Or just pull code from repository to get updates(Stay in project-folder):*
+
+`git pull https://github.com/danzalux/noip-robot.git`
 
 ### Build docker-image (stay in cloned folder - you need Dockerfile):
 
@@ -17,6 +23,12 @@ free hosts expire every month. This simplified script auto clicks web pages to r
 ### Start container:
 
 `docker run --rm -it noip-robot NOIPusername password`
+
+Or optional just start container with enhanced trace-output:
+
+`docker run --rm -it noip-robot NOIPusername password trace`
+
+(Just word "trace" as last parameter is enough)
 
 With <code>--rm</code> the container will automatically remove when it exit.
 
