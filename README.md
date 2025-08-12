@@ -1,5 +1,7 @@
 ## Script to auto confirm noip.com free hosts
 
+Updated 12 Aug 2025
+
 free hosts expire every month. This simplified script auto clicks web pages to renew the hosts, using Python/Selenium with Firefox headless mode.
 
 ## noip-robot
