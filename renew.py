@@ -186,7 +186,7 @@ def main():
                     doTraceLog(trace_on_off, "\n> Iterating Buttons:")
                     for button in buttons:
                         try:
-                            doTraceLog(trace_on_off, "Button: " + button.text)
+                            doTraceLog(trace_on_off, "> Button: " + button.text)
 
                         except NoSuchElementException:
                             doTraceLog(trace_on_off, "> 'ERROR: Zero(0) Buttons on web-page in Wrapper found")
@@ -221,7 +221,7 @@ def main():
                             print("\nHost \"" + confirmed_host + "\" confirmed")
                             sleep(0.050)
 
-                        print("===================")
+                            print("===================")
 
                         # for testing purposes:
                         # elif button.text == "Modify":
