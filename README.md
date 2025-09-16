@@ -34,7 +34,7 @@ With <code>--rm</code> the container will automatically remove when it exit.
 
 `-it` is short for `--interactive` + `--tty`. When you docker run with this command it takes you straight inside the container.
 
-## Linux-Cron (simple variant usage:"crontab -e"):
+## Linux-Cron (simple variant usage:"crontab -e" in Terminal):
 
 `0 9 */3 * * docker run --rm noip-robot NOIPusername password`
 
@@ -44,7 +44,7 @@ Or run with output to file:
 
 `0 9 */3 * * docker run --rm noip-robot NOIPusername password >> /directory/path/file.log`
 
-`crontab -l` (view the contents of your crontab)
+`crontab -l` (view the contents of your crontab in Terminal)
 
 [https://crontab.guru/#0_9_*/3_*_*](https://crontab.guru/#0_9_*/3_*_*)
 
