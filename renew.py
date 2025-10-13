@@ -287,9 +287,9 @@ def main():
                         confirmed_hosts_count = do_confirm_hosts(browser, confirmed_hosts_count, trace_on_off)
 
                         if confirmed_hosts_count == 0:
-                            print("\nNo host(s) for confirm\n")
+                            print("No host(s) for confirm\n")
                         elif confirmed_hosts_count == 1:
-                            print("\n1 host confirmed\n")
+                            print("1 host confirmed\n")
                         else:
                             print(str(confirmed_hosts_count) + " hosts confirmed\n")
 
