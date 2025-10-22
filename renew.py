@@ -133,6 +133,31 @@ def do_login(browser, email, password, login_status, time_st, trace_on_off):
     return login_status, time_st
 
 
+def parse_arguments(argv):
+    """ Returns parsed arguments like login, password, trace """
+
+    trace_on_off = False
+    email = None
+    password = None
+
+    args = [a.strip() for a in argv[1:] if a.strip()]
+
+    # Check "trace"-argv supplied
+    if "trace" in args:
+        trace_on_off = True
+        args.remove("trace")
+
+    # are login + password supplied?
+    if len(args) >= 2:
+        email, password = args[0], args[1]
+    else:
+        # when not - ask user
+        email = input("Login or Email: ").strip()
+        password = getpass("Password: ").strip()
+
+    return email, password, trace_on_off
+
+
 def fetch_hosts_page(browser, trace_on_off):
     """GET Hosts-page with Confirm-buttons"""
     do_trace_log(trace_on_off, "\n> Fetching Hosts-Url:" + MY_NOIP_URL + " ...")
@@ -223,16 +248,8 @@ def do_confirm_hosts(browser, confirmed_hosts_count, trace_on_off):
 def main():
     trace_on_off = False
 
-    # ASK CREDENTIALS
-    if len(argv) >= 3:
-        email = argv[1]
-        password = argv[2]
-    else:
-        email = str(input("Email: ")).replace("\n", "")
-        password = getpass("Password: ").replace("\n", "")
-
-    if len(argv) > 3:  # any value for debug-TraceLog-on/off supplied?
-        trace_on_off = argv[3]
+    # PARSE ARGV , ASK CREDENTIALS
+    email, password, trace_on_off = parse_arguments(argv)
 
     do_trace_log(trace_on_off, ">Executing: " + argv[0])
 
@@ -248,14 +265,14 @@ def main():
     try:
         # FETCH Start-page and LOGIN
         do_trace_log(trace_on_off, "\n> Opening login-url (wait 7-15 sec)... ")
-        if not trace_on_off: print("..10%", end="")
+        if not trace_on_off: print("..10%", end="", flush=True)
         browser.get(LOGIN_URL)
         time_stmp = show_time_diff(trace_on_off, time_stmp)
-        if not trace_on_off: print("..20%", end="")
+        if not trace_on_off: print("..20%", end="", flush=True)
 
         if browser.current_url == LOGIN_URL:
             login_status = False
-            if not trace_on_off: print("..30%..login...", end="")
+            if not trace_on_off: print("..30%..login...", end="", flush=True)
 
             # DO LOGIN to NOIP
             do_trace_log(trace_on_off, "\n> Prepare to login... ")
@@ -287,7 +304,7 @@ def main():
                         confirmed_hosts_count = do_confirm_hosts(browser, confirmed_hosts_count, trace_on_off)
 
                         if confirmed_hosts_count == 0:
-                            print("No host(s) for confirm\n")
+                            print("No host(s) for confirm")
                         elif confirmed_hosts_count == 1:
                             print("1 host confirmed\n")
                         else:
@@ -312,9 +329,9 @@ def main():
                         while browser.title.startswith("My No-IP"):
                             sleep(0.005)
                             attmpt += 5
-                        do_trace_log(trace_on_off, "> Awaited LogOut for: " + str(attmpt) + " ms")
-                        do_trace_log(trace_on_off, "> now browser page is: " + browser.current_url)
-                        do_trace_log(trace_on_off, "> Changed BrowserTitle to: " + browser.title)
+                        do_trace_log(trace_on_off, "> Awaited LogOut for:\t\t" + str(attmpt) + " ms")
+                        do_trace_log(trace_on_off, "> now browser page is:\t\t" + browser.current_url)
+                        do_trace_log(trace_on_off, "> Changed BrowserTitle to:\t" + browser.title)
                         do_trace_log(trace_on_off, "> NoIP is logged out...")
 
             else:
