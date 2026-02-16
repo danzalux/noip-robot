@@ -1,5 +1,6 @@
 from builtins import print
 
+import pyotp
 from selenium import webdriver
 from getpass import getpass
 from time import sleep
@@ -112,7 +113,7 @@ def do_logout_post_rq(browser, path, params):
         """, path, params)
 
 
-def do_login(browser, email, password, login_status, time_st, trace_on_off):
+def do_login(browser, email, password, totp_secret, login_status, time_st, trace_on_off):
     """
     Check avaliability of LogIn-button and click it to login
     """
@@ -125,11 +126,39 @@ def do_login(browser, email, password, login_status, time_st, trace_on_off):
         if button.text in LOGIN_BTN_TEXTS:
             do_trace_log(trace_on_off, "\n> Found button: '" + button.text + "', Waiting for Click-response...")
             button.click()
-            time_st = show_time_diff(trace_on_off, time_st)
             do_trace_log(trace_on_off, "> Clicked 'Log In' button")
             login_status = True
             break
 
+    totp_first_input_element = None
+    try:
+        totp_first_input_element = browser.find_elements(By.ID, "firstInput")
+        if len(totp_first_input_element) > 0:
+            totp_first_input_element = totp_first_input_element[0]
+        login_status = False
+    except NoSuchElementException:
+        login_status = True
+
+    if not login_status: # is TOTP enabled?
+        do_trace_log(trace_on_off, "Performing TOTP login")
+        if totp_first_input_element is None:
+            print("Cannot perform TOTP login because no TOTP input was found")
+            time_st = show_time_diff(trace_on_off, time_st)
+            return login_status, time_st
+        if totp_secret == "":
+            print("Cannot perform TOTP login because no TOTP secret was found")
+            time_st = show_time_diff(trace_on_off, time_st)
+            return login_status, time_st
+
+        totp_code = pyotp.TOTP(totp_secret).now()
+        totp_first_input_element.send_keys(totp_code)
+        for input in browser.find_elements(By.TAG_NAME, "input"):
+            if input.get_attribute("type") == "submit":
+                input.click()
+                break
+
+        login_status = True
+    time_st = show_time_diff(trace_on_off, time_st)
     return login_status, time_st
 
 
@@ -151,6 +180,8 @@ def parse_arguments(argv):
     # are login + password supplied?
     if len(args) == 2:
         email, password = args[0], args[1]
+    elif len(args) >= 3:
+        email, password, totp_secret = args[0], args[1], args[2]
     else:
         # when not - ask user
         email = input("Login or Email: ").strip()
