@@ -139,6 +139,7 @@ def parse_arguments(argv):
     trace_on_off = False
     email = None
     password = None
+    totp_secret = None
 
     args = [a.strip() for a in argv[1:] if a.strip()]
 
@@ -148,14 +149,14 @@ def parse_arguments(argv):
         args.remove("trace")
 
     # are login + password supplied?
-    if len(args) >= 2:
+    if len(args) == 2:
         email, password = args[0], args[1]
     else:
         # when not - ask user
         email = input("Login or Email: ").strip()
         password = getpass("Password: ").strip()
 
-    return email, password, trace_on_off
+    return email, password, totp_secret, trace_on_off
 
 
 def fetch_hosts_page(browser, trace_on_off):
@@ -249,7 +250,7 @@ def main():
     trace_on_off = False
 
     # PARSE ARGV , ASK CREDENTIALS
-    email, password, trace_on_off = parse_arguments(argv)
+    email, password, totp_secret, trace_on_off = parse_arguments(argv)
 
     do_trace_log(trace_on_off, ">Executing: " + argv[0])
 
@@ -276,7 +277,7 @@ def main():
 
             # DO LOGIN to NOIP
             do_trace_log(trace_on_off, "\n> Prepare to login... ")
-            login_status, time_stmp = do_login(browser, email, password, login_status, time_stmp, trace_on_off)
+            login_status, time_stmp = do_login(browser, email, password, totp_secret, login_status, time_stmp, trace_on_off)
 
             if not login_status:
                 print("Login button has changed. Please check script or contact support. ")
