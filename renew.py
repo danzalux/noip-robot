@@ -150,12 +150,14 @@ def do_login(browser, email, password, totp_secret, login_status, time_st, trace
             time_st = show_time_diff(trace_on_off, time_st)
             return login_status, time_st
 
-        totp_code = pyotp.TOTP(totp_secret).now()
-        totp_first_input_element.send_keys(totp_code)
-        for input in browser.find_elements(By.TAG_NAME, "input"):
-            if input.get_attribute("type") == "submit":
-                input.click()
-                break
+        if totp_secret is not None:
+            if len(totp_secret) > 0:
+                totp_code = pyotp.TOTP(totp_secret).now()
+                totp_first_input_element.send_keys(totp_code)
+                for input in browser.find_elements(By.TAG_NAME, "input"):
+                    if input.get_attribute("type") == "submit":
+                        input.click()
+                        break
 
         login_status = True
     time_st = show_time_diff(trace_on_off, time_st)
