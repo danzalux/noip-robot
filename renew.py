@@ -7,7 +7,7 @@ from time import sleep
 from sys import argv
 from datetime import datetime
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -213,8 +213,15 @@ def do_click_confirm_button(browser, button, confirmed_hosts, trace_on_off):
 
     host_name = browser.find_element(By.ID, "zone-collection-wrapper").find_element(By.TAG_NAME, "h4").text
     do_trace_log(trace_on_off, ">   Click: " + button.text)
+
     # browser.get_full_page_screenshot_as_file('000_before_click_confirm.png')  # Debug-trace
-    button.click()
+    try:
+        button.click()
+
+    except ElementClickInterceptedException as e:
+        print(browser.get_full_page_screenshot_as_base64())     # Debug-trace
+        print("\nButton is not clickable because another element obscures it, let's try to click it with JS...")
+        browser.execute_script("arguments[0].click();", button)
     # browser.get_full_page_screenshot_as_file('010_after_clicked_confirm.png')  # Debug-trace
 
     # wait Confirm-button disappear
